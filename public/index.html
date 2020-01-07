@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Payment Alert</title>
+  </head>
+  <body>
+    <div id="money-panel" class="panel">
+      <h2><span id="amount">100</span> <span id="currency">EUR</span></h2>
+      <p id="description">für ein Jahr Sight</p>
+    </div>
+    <div id="money-log" class="money-log"></div>
+  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io("http://localhost:8080");
+    socket.on("money", ({ amount, currency, description }) => {
+      // Play Sound Effect
+      var audio = new Audio("/sound.mp3");
+      audio.play();
+
+      // Show Animation
+      document.getElementById("money-panel").className = "panel";
+
+      if (window.moneyTimeout) {
+        clearTimeout(window.moneyTimeout);
+      }
+
+      window.moneyTimeout = setTimeout(() => {
+        window.moneyTimeout = null;
+
+        document.getElementById("money-panel").className = "panelActive";
+        document.getElementById("amount").textContent = amount;
+        document.getElementById(
+          "currency"
+        ).textContent = `${currency}`.toUpperCase();
+        document.getElementById("description").textContent = description;
+      }, 10);
+
+      // Add to log
+      document
+        .getElementById("money-log")
+        .insertAdjacentHTML(
+          "afterbegin",
+          '<div class="money-log-item">💸 <small>' +
+            amount +
+            " " +
+            currency +
+            "</small></div>"
+        );
+    });
+
+    // document.getElementById("id")
+  </script>
+  <style>
+    body {
+      display: flex;
+      font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+        "Helvetica Neue", sans-serif;
+
+      min-height: 90vh;
+
+      background-color: #000000;
+    }
+
+    h2 {
+      font-size: 45px;
+
+      color: #fff;
+      text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black,
+        -1px -1px 1px black;
+    }
+
+    p {
+      font-size: 28px;
+      color: #ffffff;
+      text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black,
+        -1px -1px 1px black;
+    }
+
+    .money-log {
+      position: fixed;
+      left: 16px;
+      top: 16px;
+    }
+
+    .money-log-item {
+      margin-bottom: 16px;
+    }
+
+    .money-log-item * {
+      font-size: 20px;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .panel,
+    .panelActive {
+      margin: auto;
+      padding: 32px 128px;
+
+      border-style: none;
+      border-radius: 16px;
+
+      background-color: #ffffff;
+
+      transform: scale(0);
+    }
+
+    .panelActive {
+      background: linear-gradient(
+        124deg,
+        #ff2400,
+        #e81d1d,
+        #e8b71d,
+        #e3e81d,
+        #1de840,
+        #1ddde8,
+        #2b1de8,
+        #dd00f3,
+        #dd00f3
+      );
+      background-size: 1800% 1800%;
+
+      animation: PanelAnimation 10s ease 1;
+    }
+
+    @keyframes PanelAnimation {
+      0% {
+        background-position: 0% 82%;
+        transform: scale(0);
+      }
+      5% {
+        transform: scale(1);
+      }
+      50% {
+        background-position: 100% 19%;
+      }
+      95% {
+        transform: scale(1);
+      }
+      100% {
+        background-position: 0% 82%;
+        transform: scale(0);
+      }
+    }
+  </style>
+</html>
