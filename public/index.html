@@ -16,7 +16,13 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io("http://localhost:8080");
-    socket.on("money", ({ amount, currency, description }) => {
+    socket.on("money", ({ amount: amountCents, currency, description }) => {
+      let amount = amountCents / 100;
+      amount = amount.toLocaleString("en-US", {
+        style: "currency",
+        currency: currency
+      });
+
       // Play Sound Effect
       var audio = new Audio("/sound.mp3");
       audio.play();
