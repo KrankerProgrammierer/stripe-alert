@@ -29,13 +29,14 @@ Quick and dirty app to receive payment notifications from stripe.
 ## Copyright Notice
 
 The sound at `public/sound.mp3` is taken from:
-| | |
-| ---- | --------------------- |
-| Title | Here Comes the Money |
-| Artist | Jim Johnston |
-| Album |WWE: Here Comes the Money (Shane McMahon) |
-| Writers | Jim Johnston |
-| Source | https://www.youtube.com/watch?v=TeXatquVqAc |
+
+|         |                                             |
+| ------- | ------------------------------------------- |
+| Title   | Here Comes the Money                        |
+| Artist  | Jim Johnston                                |
+| Album   | WWE: Here Comes the Money (Shane McMahon)   |
+| Writers | Jim Johnston                                |
+| Source  | https://www.youtube.com/watch?v=TeXatquVqAc |
 
 ## Author
 
